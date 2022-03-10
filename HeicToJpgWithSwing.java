@@ -9,6 +9,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileSystemView;
 
 public class HeicToJpg {
@@ -18,6 +19,7 @@ public class HeicToJpg {
 	private JButton fileConvertBtn;
 	private DefaultListModel<String> listModel;
 	private JList<DefaultListModel<String>> srcFileListLbl;
+	private JScrollPane scrolled;
 
 	private void prepareGUI() {
 		mf = new JFrame("Heic To Jpg");
@@ -46,6 +48,14 @@ public class HeicToJpg {
 		fileConvertBtn.setSize(100, 50);
 		fileConvertBtn.addActionListener(new ButtonClickListener());
 		mf.add(fileConvertBtn);
+		
+		listModel = new DefaultListModel<String>();
+		srcFileListLbl = new JList(listModel);
+		listModel.addElement("123");
+		scrolled = new JScrollPane(srcFileListLbl);
+		scrolled.setLocation(10, 100);
+		scrolled.setSize(50, 50);
+		mf.add(scrolled);
 		
 		mf.setVisible(true);
 	}
