@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,58 +11,61 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.filechooser.FileSystemView;
 
 public class HeicToJpg {
 	private JFrame mf;
-	private JLabel srcFolderLbl;
+	private JPanel mp;
 	private JButton folderOpenBtn;
 	private JButton fileConvertBtn;
 	private JList<String> srcFileList;
 	private DefaultListModel<String> srcFileListModel;
-	private JScrollPane scrolled;
+	private JScrollPane scrolledPane;
 
 	private void prepareGUI() {
 		mf = new JFrame("Heic To Jpg");
 		mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mf.setLocation(10, 10);
 		mf.setSize(550, 850);
-		mf.setLayout(null);
 		
-		/*
-		srcFolderLbl = new JLabel("원본폴더");
-		srcFolderLbl.setLocation(10, 10);
-		srcFolderLbl.setSize(100, 50);
-		srcFolderLbl.setBackground(Color.darkGray);
-		srcFolderLbl.setOpaque(true);
-		mf.add(srcFolderLbl);
-		*/
+		//mf.setLayout(null);
+		mf.setLayout(new BorderLayout());
+		
+		mp = new JPanel();
 		
 		ButtonClickListener buttonClickListener = new ButtonClickListener();
 		
 		folderOpenBtn = new JButton("폴더열기");
 		folderOpenBtn.setActionCommand("folderOpen");
-		folderOpenBtn.setLocation(10, 15);
-		folderOpenBtn.setSize(100, 50);
+		//folderOpenBtn.setLocation(10, 15);
+		//folderOpenBtn.setSize(100, 50);
 		folderOpenBtn.addActionListener(buttonClickListener);
-		mf.add(folderOpenBtn);
+		//mf.add(folderOpenBtn);
+		mp.add(folderOpenBtn);
 
 		fileConvertBtn = new JButton("파일변환");
 		fileConvertBtn.setActionCommand("fileConvert");
-		fileConvertBtn.setLocation(120, 15);
-		fileConvertBtn.setSize(100, 50);
+		//fileConvertBtn.setLocation(120, 15);
+		//fileConvertBtn.setSize(100, 50);
 		fileConvertBtn.addActionListener(buttonClickListener);
-		mf.add(fileConvertBtn);
+		//mf.add(fileConvertBtn);
+		mp.add(fileConvertBtn);
+		
+		mf.add(mp, BorderLayout.NORTH);
 		
 		srcFileList = new JList<String>(new DefaultListModel<String>());
 		srcFileListModel = (DefaultListModel<String>)srcFileList.getModel();
 		
-		scrolled = new JScrollPane(srcFileList);
-		scrolled.setLocation(10, 80);
-		scrolled.setSize(513, 713);
-		mf.add(scrolled);
+		scrolledPane = new JScrollPane(srcFileList,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		
+		//scrolledPane.setLocation(10, 80);
+		//scrolledPane.setSize(513, 713);
+		mf.add(scrolledPane);
 		
 		mf.setVisible(true);
 	}
@@ -101,7 +105,7 @@ public class HeicToJpg {
 	}
 
 	public static String jFileChooserUtil(){
-
+        
 		JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); // 디렉토리 설정
 		chooser.setCurrentDirectory(new File("/")); // 현재 사용 디렉토리를 지정
 		chooser.setAcceptAllFileFilterUsed(true);   // Fileter 모든 파일 적용 
