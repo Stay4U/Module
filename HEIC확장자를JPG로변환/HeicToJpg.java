@@ -131,10 +131,17 @@ public class HeicToJpg {
         }
     }
 
-    public static String jFileChooserUtil(){
+    public String jFileChooserUtil(){
 
         JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); // 디렉토리 설정
-        chooser.setCurrentDirectory(new File("/")); // 현재 사용 디렉토리를 지정
+
+        String beforeDirectoryPath = "/";
+        String selectedDirectoryPath = folderPathLb.getText();
+        if( !"".equals(selectedDirectoryPath) ){
+            beforeDirectoryPath = selectedDirectoryPath;
+        }
+
+        chooser.setCurrentDirectory(new File(beforeDirectoryPath)); // 현재 사용 디렉토리를 지정
         chooser.setAcceptAllFileFilterUsed(true);   // Fileter 모든 파일 적용
         chooser.setDialogTitle("select HEIC folder"); // 창의 제목
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); // 파일 선택 모드
